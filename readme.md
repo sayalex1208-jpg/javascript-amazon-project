@@ -1,0 +1,1 @@
+we generate the html code inside javascript because it is use full when we want to add a new product inside it 

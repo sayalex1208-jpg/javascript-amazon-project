@@ -1,29 +1,3 @@
-const products = [{
-    image : 'images/products/athletic-cotton-socks-6-pairs.jpg',
-    name : 'Black and Gray Athletic Cotton Socks - 6 Pairs',
-    rating: {
-        stars : 4.5,
-        count : 87
-    },
-    priceCients : 1090
-}, {
-    image : 'images/products/intermediate-composite-basketball.jpg',
-    name : 'product-name limit-text-to-2-lines',
-    rating: {
-        stars : 4,
-        count : 127
-    },
-    priceCients : 2095
-}, {
-    image : 'images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg',
-    name : 'Adults Plain Cotton T-Shirt - 2 Pack',
-    rating: {
-        stars : 4.5,
-        count : 56
-    },
-    priceCients : 799
-}, ];
-
 
 // combine string together 
 let productsHtml = '';
@@ -49,7 +23,7 @@ products.forEach((product) => {
             </div>
 
             <div class="product-price">
-                ${(product.priceCients/100).toFixed(2)}$
+                ${(product.priceCents/100).toFixed(2)}$
             </div>
 
             <div class="product-quantity-container">
@@ -74,7 +48,7 @@ products.forEach((product) => {
                 Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button class="add-to-cart-button button-primary js-add-tocard " data-product-id="${product.id}">
                 Add to Cart
             </button>
             </div>
@@ -82,5 +56,36 @@ products.forEach((product) => {
 }) 
 
 
-console.log(productsHtml);
 document.querySelector('.js-products-grid').innerHTML = productsHtml;
+
+// SELECTED all the add to card tbn, loop it , event ; when click then do somthing(fn)
+document.querySelectorAll('.js-add-tocard')
+    .forEach((button) => {
+
+        // when user click add to cart (base on prduct name)
+        button.addEventListener('click',() => {
+            const productId = button.dataset.productId;
+
+            let matchingitem;
+            cart.forEach((item) =>{
+                if(productId === item.productId) {
+                    // console.log(item);
+                    matchingitem = item;
+                }
+            });
+
+            if(matchingitem){
+                matchingitem.quantity += 1;
+            }else{
+
+                // push the name and the quantity inside the cart.js
+                cart.push({
+                productId: productId,
+                quantity: 1
+                });
+            }
+            console.log(cart);
+            
+        });
+    });
+    
