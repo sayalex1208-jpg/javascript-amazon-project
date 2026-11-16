@@ -77,15 +77,21 @@ document.querySelectorAll('.js-add-tocard')
             if(matchingitem){
                 matchingitem.quantity += 1;
             }else{
-
                 // push the name and the quantity inside the cart.js
                 cart.push({
                 productId: productId,
                 quantity: 1
                 });
             }
-            console.log(cart);
-            
+
+// calculate the total quantity to the cart 
+        let totalcart = 0; 
+        cart.forEach((item)=>{
+            totalcart += item.quantity;
         });
+        
+        document.querySelector('.cart-quantity')
+            .innerHTML = totalcart;
+
     });
-    
+});
