@@ -1,3 +1,5 @@
+import { cart, addTocart } from '../data/cart.js';
+import { products } from '../data/products.js';
 
 // combine string together 
 let productsHtml = '';
@@ -56,42 +58,30 @@ products.forEach((product) => {
 }) 
 
 
-document.querySelector('.js-products-grid').innerHTML = productsHtml;
+document.querySelector('.js-products-grid')
+    .innerHTML = productsHtml;
+
+function updateCardquantity(){
+    // calculate the total quantity to the cart 
+        let totalcart = 0; 
+        cart.forEach((cardItem)=>{
+            totalcart += cardItem.quantity;
+        });
+        
+        document.querySelector('.cart-quantity')
+            .innerHTML = totalcart;
+}
+
 
 // SELECTED all the add to card tbn, loop it , event ; when click then do somthing(fn)
 document.querySelectorAll('.js-add-tocard')
     .forEach((button) => {
 
-        // when user click add to cart (base on prduct name)
-        button.addEventListener('click',() => {
-            const productId = button.dataset.productId;
-
-            let matchingitem;
-            cart.forEach((item) =>{
-                if(productId === item.productId) {
-                    // console.log(item);
-                    matchingitem = item;
-                }
-            });
-
-            if(matchingitem){
-                matchingitem.quantity += 1;
-            }else{
-                // push the name and the quantity inside the cart.js
-                cart.push({
-                productId: productId,
-                quantity: 1
-                });
-            }
-
-// calculate the total quantity to the cart 
-        let totalcart = 0; 
-        cart.forEach((item)=>{
-            totalcart += item.quantity;
-        });
-        
-        document.querySelector('.cart-quantity')
-            .innerHTML = totalcart;
+    // when user click add to cart (base on prduct name)
+    button.addEventListener('click',() => {
+        const productId = button.dataset.productId;
+        addTocart(productId);
+        updateCardquantity();
 
     });
 });
